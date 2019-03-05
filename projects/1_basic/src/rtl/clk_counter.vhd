@@ -37,5 +37,20 @@ BEGIN
 -- brojac koji kada izbroji dovoljan broj taktova generise SIGNAL one_sec_o koji
 -- predstavlja jednu proteklu sekundu, brojac se nulira nakon toga
 
+--registar
+process (clk_i, rst_i) begin
+	if(rst_i = '1') then
+		counter_r <= (others=>'0');
+	elsif(clk_i'event and clk_i = '1') then
+		if(cnt_en_i = '1') then
+				counter_r <= counter_r + 1;
+		else 
+			counter_r <= counter_r;
+		end if;
+	end if;
+end process;
 
+one_sec_o <= '1' when counter_r = max_cnt else
+					'0';
+					
 END rtl;
